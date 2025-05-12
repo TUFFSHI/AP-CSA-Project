@@ -438,91 +438,336 @@ class Enemy
     }
 }
 //Class Game
+class Game
+{
     //Properties:
         //player: Player
+    private Player player;
         //questions: ArrayList of Question
+    private ArrayList<Question> questions;
         //scanner: Scanner
+    private Scanner scanner;
         //gameRunning: Boolean
+    private boolean gameRunning;
         //random: Random
+    private Random random;
 
     //Constructor()
+    public Game
+    {
         //Initialize scanner
+        scanner = new Scanner(System.in);
         //Set gameRunning to true
+        gameRunning = true;
         //Initialize questions as a new ArrayList of Question
+        questions = new ArrayList<Question>();
         //Initialize random as a new Random object
+        random = new Random();
+    }
 
     //Method start()
+    public void start()
+    {
         //Call initializeGame()
+        initializeGame();
         //Call mainMenu()
+        mainMenu();
+    }
 
     //Method initializeGame()
+    public void initializeGame()
+    {
         //Print "Welcome to AP World History Battle Game!"
+        System.out.println("Welcome to AP World History Battle Game!");
         //Call loadQuestions()
+        loadQuestions();
         //Call createPlayer()
+        createPlayer();
+    }
 
     //Method loadQuestions()
+    public void loadQuestions()
+    {
         //Create question objects and add them to the questions list
+        String[] q1Options = {"Mesopotamia", "Egypt", "Indus Valley", "China"};
+        questions.add(new Question("Which civilization is considered the oldest?",q1Options,0,"Ancient History"));
+        String[] q2Options = {"1492", "1776", "1066", "1215"};
+        questions.add(new Question("In what year did Columbus reach the Americas?",q2Options,0,"World Exploration"));
+        String[] q3Options = {"Karl Marx", "Adam Smith", "John Maynard Keynes", David Ricardo"};
+        questions.add(new Question("Who wrote 'The Wealth of Nations'?",q3Options,1,"Economics"));
+        String[] q4Options = {"Woodrow Wilson", "Franklin D. Roosevelt", "Harry S. Truman", "Dwight D. Eisenhower"};
+        questions.add(new Question("Which U.S. president is associated with the New Deal?",q4Options,1,"US History"));
+        String[] q5Options = {"Socrates", "Plato", "Aristotle", "Epicurus"};
+        questions.add(new Question("Who was the teacher of Alexander the Great?",q5Options,2,"Ancient Greece"));
+        String[] q6Options = {"Buddhism", "Christianity", "Islam", "Hinduism"};
+        questions.add(new Question("Which religion originated in India?",q6Options,3,"World Religions"));
+        String[] q7Options = {"The printing press", "The compass", "Gunpowder", "The steam engine"};
+        questions.add(new Question("Which invention is attributed to Johannes Gutenberg?",q7Options,0,"Renaissance"));
+        String[] q8Options = {"The French Revolution", "The American Revolution", "The Russian Revolution", "The Industrial Revolution"};
+        questions.add(new Question("Which revolution began in 1789?",q8Options,0,"European History"));
+        String[] q9Options = {"Japan", "China", "Korea", "Vietnam"};
+        questions.add(new Question("In which country did the Meiji Restoration take place?",q9Options,0,"East Asian History"));
+        String[] q10Options = {"Nelson Mandela", "Mahatma Ghandhi", "Martin Luther King Jr.", "Jawaharlal Nehru"};
+        questions.add(new Question("Who led the Salt March in India?",q10Options,1,"World Decolonization"));
+        System.out.println(questions.size() + " questions loaded.");
+    }
 
     //Method createPlayer()
+    public void createPlayer()
+    {
         //Print "Enter your name:"
+        System.out.println("Enter your name:");
         //Read player's name from scanner
+        String name = scanner.nextLine();
         //Print character class options
+        System.out.println("Choose your character class:");
         //Read player's character class choice from scanner
+        System.out.println("1. History Mage - specializes in ancient history");
+        System.out.println("2. Math Warrior - specializes in dates and numbers");
+        System.out.println("3. Code Wizard - specializes in modern history");
+        int choice = 0;
+        if (scanner.hasNextInt())
+        {
+            choice = scanner.nextInt();
+        } 
+        else
+        {
+            System.out.println("Invalid input. Please enter a number between 1 and 3. Defaulting to History Mage.");
+            choice = 1;
+        }
+        scanner.nextLine();
+        String characterClass = "";
+        if (choice == 1)
+        {
+            characterClass = "History Mage";
+        }
+        else if (choice == 2)
+        {
+            characterClass = "Math Warrior";
+        }
+        else if (choice == 3)
+        {
+            characterClass = "Code Wizard";
+        }
+        else
+        {
+            characterClass = "History Mage";
+            System.out.println("Invalid choice. Defaulting to History Mage.");
+        }
         //Create a new Player object with the given name and character class
+        player = new Player(name, characterClass);
         //Print a welcome message
+        System.out.println("Welcome, " + player.name + " the " + player.characterClass + "!");
+    }
 
     //Method mainMenu()
+    public void mainMenu()
+    {
         //While gameRunning is true:
+        while (gameRunning)
+        {
             //Print main menu options
+            System.out.println("\n=== MAIN MENU ===");
+            System.out.println("1. Start Battle");
+            System.out.println("2. View Stats");
+            System.out.println("3. Exit Game");
             //Read player's choice from scanner
+            int choice = 0;
+            if (scanner.hasNextInt())
+            {
+                choice = scanner.nextInt();
+            }
+            else
+            {
+                System.out.println("Invalid input. Please enter a number between 1 and 3.");
+                scanner.next();
+            }
+            scanner.nextLine();
             //If choice is 1:
+            if (choice == 1)
+            {
                 //Call startBattle()
+                startBattle();
+            }
             //Else if choice is 2:
+            else if (choice == 2)
+            {
                 //Call player.displayStats()
+                player.displayStats();
+            }
             //Else if choice is 3:
+            else if (choice == 3)
+            {
                 //Call exitGame()
+                exitGame();
+            }
             //Else:
+            else
+            {
                 //Print "Invalid choice. Try again."
+                System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
 
     //Method startBattle()
+    public void startBattle()
+    {
         //Create a new Enemy object
+        Enemy enemy = new Enemy(player.level);
         //Print enemy introduction
+        System.out.println("A new challenger approaches: " + enemy.name);
         //While enemy's health is greater than 0 and player's health is greater than 0:
+        while (enemy.health > 0 && player.health > 0)
+        {
             //Get a random question from the questions list
+            Question question = questions.get(random.nextInt(questions.size()));
             //Display the question and its options
+            question.display();
             //Read player's answer from scanner
+            System.out.println("Enter your answer (1-" + question.options.length + "):");
+            int answer = 0;
             //If player's answer is valid:
+            if (scanner.hasNextInt())
+            {
+                answer = scanner.nextInt() - 1;
+            }
+            else
+            {
+                System.out.println("Invalid input. The enemy attacks!");
+                scanner.next();
+                enemy.attackPlayer(player);
+                if (player.health <= 0)
+                {
+                    break;
+                }
+            }
+            scanner.nextLine();
+            if (answer >= 0 && answer < question.options.length)
+            {
                 //If the answer is correct:
+                if (question.isCorrect(answer))
+                {
                     //Print "Correct answer!"
+                    System.out.println("Correct answer!");
                     //Call player.attackEnemy(enemy)
+                    player.attackEnemy(enemy);
                     //Chance to get power-up
-                    //If a random number is less than 30% of 10:
-                         //Add a random power-up to the player
-                         //Ask player if they want to use a power-up
-                         //If player chooses to use a power-up:
-                            //Display available power-ups
-                            //Get power-up choice from player
-                            //Call player.usePowerUp(enemy, powerUpChoice)
+                    if (random.nextInt(10) < 3)
+                    {
+                        //Add a random power-up to the player
+                        String[] powerUps = {"Double Attack", "Heal", "Shield"};
+                        player.addPowerUp(powerUps[random.nextInt(powerUps.length)]);
+                        //Ask player if they want to use a power-up
+                        if (player.getPowerUps().size() > 0)
+                        {
+                            System.out.println("Do you want to use a power-up? (1-Yes, 0-No)");
+                            int usePowerUpChoice = 0;
+                            if (scanner.hasNextInt())
+                            {
+                                usePowerUpChoice = scanner.nextInt();
+                            }
+                            else
+                            {
+                                System.out.println("Invalid Input. Not using power-up");
+                                scanner.next();
+                                usePowerUpChoice = 0;
+                            }
+                            scanner.nextLine();
+                            //If player chooses to use a power-up:
+                            if (usePowerUpChoice == 1)
+                            {
+                                System.out.println("Choose a power-up:");
+                                //Display available power-ups
+                                for (int i = 0; i < player.getPowerUps().size(); i++)
+                                {
+                                    System.out.println((i + 1) + ". " + player.getPowerUps().get(i));
+                                }
+                                int powerUpChoice = 0;
+                                if (scanner.hasNextInt())
+                                {
+                                    //Get power-up choice from player
+                                    powerUpChoice = scanner.nextInt() - 1;
+                                }
+                                else
+                                {
+                                    System.out.println("Invalid power up choice.");
+                                    scanner.next();
+                                    powerUpChoice = -1;
+                                }
+                                scanner.nextLine();
+                                //Call player.usePowerUp(enemy, powerUpChoice)
+                                player.usePowerUp(enemy, powerUpChoice);
+                            }
+                        }
+                    }
+                }
                 //Else:
+                else
+                {
                     //Print "Incorrect answer!"
+                    System.out.println("Incorrect answer! The correct answer was: " + (question.getCorrectAnswerIndex() + 1) + ". " + question.getOptions()[question.getCorrectAnswerIndex()]);
                     //Call enemy.attackPlayer(player)
+                    enemy.attackPlayer(player);
+                }
+                    
+            
+            }
             //Else:
+            else
+            {
+                
                 //Print "Invalid answer! The enemy attacks!"
+                System.out.println("Invalid answer! The enemy attacks!");
                 //Call enemy.attackPlayer(player)
+                enemy.attackPlayer(player);
+            }
                 //Check if battle is over
             //If enemy's health is 0 or less:
+            if (enemy.getHealth() <= 0)
+            {
                 //Print "Victory!"
+                System.out.println("Victory! You defeated " + enemy.getName() + "!");
                 //Call player.addXP(1)
+                boolean leveledUp = player.addXP(1);
                 //If player leveled up:
+                if(leveledUp)
+                {
                     //Print "Enemies will be stronger now!"
+                    System.out.println("Enemies will be stronger now!");
+                }
                 //Break from the loop
+                break;
+            }
             //If player's health is 0 or less:
+            if (player.health <= 0)
+            {
                 //Print "Defeat!"
+                System.out.println("Defeat! " + enemy.getName() + " has defeated you!");
                 //Break from the loop
-
+                break;
+            }
+        }
+    }
     //Method exitGame()
+    public void exitGame()
+    {
         //Print "Thanks for playing AP World History Battle Game!"
+        System.out.println("Thanks for playing AP World History Battle Game!");
         //Set gameRunning to false
+        gameRunning = false;
+    }
+}
+//Main Program Execution
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Game game = new Game();
+        game.start();
+    }
+}
+        
 
 
 
