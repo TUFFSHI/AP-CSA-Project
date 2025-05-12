@@ -274,40 +274,260 @@ class Player
     }
 
     //Method displayStats():
+    public void displayStats()
+    {
         //Print "Name: " + name
+        System.out.println("Name: " + name);
         //Print "Class: " + characterClass
+        System.out.println("Class: " + characterClass);
         //Print "Level: " + level
+        System.out.println("Level: " + level);
         //Print "Health: " + health + "/" + maxHealth
+        System.out.println("Health: " + health + "/" + maxHealth);
         //Print "Attack: " + attack
+        System.out.println("Attack: " + attack);
         //Print "XP: " + xp + "/" + xpToNextLevel
+        System.out.println("XP: " + xp + "/" + xpToNextLevel);
         //Print "Power-ups: " + powerUps
+        System.out.println("Power-ups: " + powerUps);
+    }
 
     //Method getName():
+    public String getName()
+    {
         //Return name
+        return name;
+    }
 
     //Method getCharacterClass():
+    public String getCharacterClass()
+    {
         //Return characterClass
+        return characterClass;
+    }
 
     //Method getHealth():
+    public int getHealth()
+    {
         //Return health
+        return health;
+    }
 
     //Method getMaxHealth():
+    public int getMaxHealth()
+    {
         //Return maxHealth
-
+        return maxHealth;
+    }
     //Method getAttack():
+    public int getAttack()
+    {
         //Return attack
+        return attack;
+    }
 
     //Method getLevel():
+    public int getAttack()
+    {
         //Return level
+        return level;
+    }
 
     //Method getXp():
+    public int getXp()
+    {
         //Return xp
+        return xp;
+    }
 
     //Method getXpToNextLevel():
+    public int getXpToNextLevel()
+    {
         //Return xpToNextLevel
+        return xpToNextLevel;
+    }
 
     //Method getPowerUps():
+    public ArrayList<String> getPowerUps()
+    {
         //Return powerUps
+    }
+}
+//Class Enemy
+class Enemy
+{
+    //Properties:
+    //name: String
+    public String name;
+    //health: Integer
+    public int health;
+    //attack: Integer // private
+    private int attack;
+    //level: Integer
+    public int levell
+    //random: Random (Random number generator)
+    private Random random;
+        
+    //Constructor(playerLevel):
+    public Enemy(int PlayerLevel)
+    {
+        //Set level to playerLevel
+        this.level = playerLevel;
+        //Set health to 50 + (10 * level)
+        this.health = 50 + (10 * level);
+        //Set attack to 5 + (3 * level)
+        this.attack = 5 + (3 * level);
+        //Initialize random as a new Random object
+        this.random = new Random();
+
+        // Generate enemy name based on historical figures
+        //names: Array of Strings = ["Alexander", "Caesar", "Cleopatra", "Napoleon", "Genghis Khan"]
+        String[] names = {"Alexander", "Caeser", "Cleopatra", "Napoleon", "Genghis Khan"};
+        //Set name to names[random.nextInt(length of names)] + " (Level " + level + ")"
+        this.name = names[random.nextInt(names.length)] + " (Level " + level + ")";
+    }
+
+    //Method attackPlayer(player):
+    public void attackPlayer(Player player)
+    {
+        //Print "[enemy name] attacks for [attack] damage!"
+        System.out.println(name + " attacks for " + attack + " damage!");
+        //Call player.takeDamage(attack)
+        player.takeDamage(attack);
+    }
+
+    //Method takeDamage(amount):
+    public void takeDamage(int amount)
+    {
+        //Subtract amount from health
+        health -= amount;
+        //If health is less than 0, set health to 0
+        if (health < 0)
+        {
+            health = 0;
+        }
+        //Print "[enemy name] has " + health + " health remaining."
+        System.out.println(name + " has " + health + " health remaining.");
+    }
+    //Method getName():
+    public String getName()
+    {
+        //Return name
+        return name;
+    }
+
+    //Method getHealth():
+    public int getHealth()
+    {
+        //Return health
+        return health;
+    }
+
+    //Method getAttack(): //Added getAttack()
+    public int getAttack()
+    {
+        //Return attack
+        return attack;
+    }
+
+    //Method getLevel():
+    public int getLevel()
+    {
+        //Return level
+        return level;
+    }
+}
+//Class Game
+    //Properties:
+        //player: Player
+        //questions: ArrayList of Question
+        //scanner: Scanner
+        //gameRunning: Boolean
+        //random: Random
+
+    //Constructor()
+        //Initialize scanner
+        //Set gameRunning to true
+        //Initialize questions as a new ArrayList of Question
+        //Initialize random as a new Random object
+
+    //Method start()
+        //Call initializeGame()
+        //Call mainMenu()
+
+    //Method initializeGame()
+        //Print "Welcome to AP World History Battle Game!"
+        //Call loadQuestions()
+        //Call createPlayer()
+
+    //Method loadQuestions()
+        //Create question objects and add them to the questions list
+
+    //Method createPlayer()
+        //Print "Enter your name:"
+        //Read player's name from scanner
+        //Print character class options
+        //Read player's character class choice from scanner
+        //Create a new Player object with the given name and character class
+        //Print a welcome message
+
+    //Method mainMenu()
+        //While gameRunning is true:
+            //Print main menu options
+            //Read player's choice from scanner
+            //If choice is 1:
+                //Call startBattle()
+            //Else if choice is 2:
+                //Call player.displayStats()
+            //Else if choice is 3:
+                //Call exitGame()
+            //Else:
+                //Print "Invalid choice. Try again."
+
+    //Method startBattle()
+        //Create a new Enemy object
+        //Print enemy introduction
+        //While enemy's health is greater than 0 and player's health is greater than 0:
+            //Get a random question from the questions list
+            //Display the question and its options
+            //Read player's answer from scanner
+            //If player's answer is valid:
+                //If the answer is correct:
+                    //Print "Correct answer!"
+                    //Call player.attackEnemy(enemy)
+                    //Chance to get power-up
+                    //If a random number is less than 30% of 10:
+                         //Add a random power-up to the player
+                         //Ask player if they want to use a power-up
+                         //If player chooses to use a power-up:
+                            //Display available power-ups
+                            //Get power-up choice from player
+                            //Call player.usePowerUp(enemy, powerUpChoice)
+                //Else:
+                    //Print "Incorrect answer!"
+                    //Call enemy.attackPlayer(player)
+            //Else:
+                //Print "Invalid answer! The enemy attacks!"
+                //Call enemy.attackPlayer(player)
+                //Check if battle is over
+            //If enemy's health is 0 or less:
+                //Print "Victory!"
+                //Call player.addXP(1)
+                //If player leveled up:
+                    //Print "Enemies will be stronger now!"
+                //Break from the loop
+            //If player's health is 0 or less:
+                //Print "Defeat!"
+                //Break from the loop
+
+    //Method exitGame()
+        //Print "Thanks for playing AP World History Battle Game!"
+        //Set gameRunning to false
+
+
+
+
+
 
 
 
