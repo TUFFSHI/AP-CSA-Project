@@ -9,13 +9,13 @@ class Question {
 // Properties:
 // Create variables that store information about each question
 //questionText: String  // Stores the text of the question itself
-private String questionText;
+    private String questionText;
 //options: Array of String // Stores the possible answers as a list of text choices
-public String[] options;
+    public String[] options;
 //correctAnswerIndex: Integer // Stores the index of the correct answer within the options list.
-private int correctAnswerIndex;
+    private int correctAnswerIndex;
 //subject: String // Stores the subject or category of the question
-private String subject;
+    private String subject;
     
 
     // Constructor:
@@ -760,14 +760,29 @@ class Game
     }
 }
 //Main Program Execution
-public class Main
-{
-    public static void main(String[] args)
-    {
+public class Main {
+    public static void main(String[] args) {
         Game game = new Game();
         game.start();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
 
 
