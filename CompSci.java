@@ -15,7 +15,7 @@ public String[] options;
 //correctAnswerIndex: Integer // Stores the index of the correct answer within the options list.
 private int correctAnswerIndex;
 //subject: String // Stores the subject or category of the question
-private String subject
+private String subject;
     
 
     // Constructor:
@@ -163,7 +163,7 @@ class Player
             health = 0;
         }
         //Print "[player name] has [health] health remaining."
-        System.out.println(name + " has " + health + " health remaining.")
+        System.out.println(name + " has " + health + " health remaining.");
     }
 
     //Method heal(amount):
@@ -181,12 +181,12 @@ class Player
     }
 
    //Method addXP(amount):
-    public boolean addXp(int amount)
+    public boolean addXP(int amount)
     {
         //Add amount to xp
         xp += amount;
         //Print "[player name] gained [amount] XP. Total: [xp]/[xpToNextLevel]"
-        System.out.println(name + " gained " + amount + " XP. Total: " + xp + "/" + xptoNextLevel);
+        System.out.println(name + " gained " + amount + " XP. Total: " + xp + "/" + xpToNextLevel);
         //If xp is greater than or equal to xpToNextLevel,
         if (xp >= xpToNextLevel)
         {
@@ -227,7 +227,7 @@ class Player
         //Add powerUp to powerUps list
         powerUps.add(powerUp);
         //Print "[player name] gained the [powerUp] power-up!"
-        System.out.println(name + " gained the " powerUp + " power-up!");
+        System.out.println(name + " gained the " + powerUp + " power-up!");
     }
 
    //Method usePowerUp(enemy, powerUpIndex):
@@ -327,7 +327,7 @@ class Player
     }
 
     //Method getLevel():
-    public int getAttack()
+    public int getLevel()
     {
         //Return level
         return level;
@@ -351,6 +351,7 @@ class Player
     public ArrayList<String> getPowerUps()
     {
         //Return powerUps
+        return powerUps;
     }
 }
 //Class Enemy
@@ -364,12 +365,12 @@ class Enemy
     //attack: Integer // private
     private int attack;
     //level: Integer
-    public int levell
+    public int level;
     //random: Random (Random number generator)
     private Random random;
         
     //Constructor(playerLevel):
-    public Enemy(int PlayerLevel)
+    public Enemy(int playerLevel)
     {
         //Set level to playerLevel
         this.level = playerLevel;
@@ -453,7 +454,7 @@ class Game
     private Random random;
 
     //Constructor()
-    public Game
+    public Game()
     {
         //Initialize scanner
         scanner = new Scanner(System.in);
@@ -493,7 +494,7 @@ class Game
         questions.add(new Question("Which civilization is considered the oldest?",q1Options,0,"Ancient History"));
         String[] q2Options = {"1492", "1776", "1066", "1215"};
         questions.add(new Question("In what year did Columbus reach the Americas?",q2Options,0,"World Exploration"));
-        String[] q3Options = {"Karl Marx", "Adam Smith", "John Maynard Keynes", David Ricardo"};
+        String[] q3Options = {"Karl Marx", "Adam Smith", "John Maynard Keynes", "David Ricardo"};
         questions.add(new Question("Who wrote 'The Wealth of Nations'?",q3Options,1,"Economics"));
         String[] q4Options = {"Woodrow Wilson", "Franklin D. Roosevelt", "Harry S. Truman", "Dwight D. Eisenhower"};
         questions.add(new Question("Which U.S. president is associated with the New Deal?",q4Options,1,"US History"));
